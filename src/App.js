@@ -6,9 +6,38 @@ function App() {
   const[newTask, setNewTask] = useState('')
 
   const addTask = () =>{
-    let newTodoList = [...todoList, newTask]
-    setTodoList(newTodoList)
+    // let newTodoList = [...todoList, newTask]
+    // setTodoList(newTodoList)
+    setTodoList([...todoList, newTask])
   }
+
+  const deleteTask = (taskName) =>{
+    // ##### Old Code ########
+    // const newTodoList = todoList.filter((t)=>{
+    //     if(t===taskName){
+    //       return false
+    //     }
+    //     else{
+    //       return true
+    //     }
+    //   }
+    // )
+    // setTodoList(newTodoList)
+
+    //######## modification 1 ########
+  //   const newTodoList = todoList.filter((t)=>{
+  //     return t !== taskName
+  //   }
+  // )
+  // setTodoList(newTodoList)
+
+   //######## modification 2 ########
+  // const newTodoList = todoList.filter((t)=> t !== taskName)
+  // setTodoList(newTodoList)
+  setTodoList(todoList.filter((t)=> t !== taskName))
+   
+  }
+
   return (
     <div className="App">
       <p>Hollla Amigo</p>
@@ -23,7 +52,14 @@ function App() {
       </div>
       <div className="taskList">
         {todoList.map((task)=>{
-          return (<h4>{task}</h4>)
+          return (
+            <div> 
+              <h4>{task}</h4>
+              <a href = "#"><button onClick={()=>deleteTask(task)}>X</button></a>
+            </div>
+            
+            
+          )
         }   
         )}
       </div>
