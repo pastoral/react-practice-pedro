@@ -5,7 +5,7 @@ import { Task } from './To-Do-List-Comp';
 function App() {
   const[todoList,setTodoList] = useState([])
   const[newTask, setNewTask] = useState('')
- 
+
 
   const addTask = () =>{
     // let newTodoList = [...todoList, newTask]
@@ -15,7 +15,8 @@ function App() {
 
     const task = {
       id: todoList.length === 0 ? 1 : todoList[todoList.length-1].id +1 ,
-      taskName : newTask
+      taskName : newTask,
+      completed : false
     }
     setTodoList([...todoList,task])
   }
@@ -47,7 +48,19 @@ function App() {
   // setTodoList(todoList.filter((t)=> t !== taskName))
 
   setTodoList(todoList.filter((t)=> t.id !== id))
-   
+  }
+
+  const completeTask = (id) =>{
+    setTodoList(
+      todoList.map((task)=>{
+        if(id===task.id){
+          return {...task, completed : true}
+        }
+        else{
+          return task
+        }
+      })
+    )
   }
 
   return (
@@ -64,7 +77,14 @@ function App() {
       </div>
       <div className="task-list">
         {todoList.map((task)=>{
-          return <Task taskName = {task.taskName} id = {task.id} deleteTask = {deleteTask} /> 
+          return (<Task 
+            taskName = {task.taskName} 
+            id = {task.id} 
+            deleteTask = {deleteTask}  
+            completeTask = {completeTask}
+            completed = {task.completed}
+            /> 
+            )
           }   
         )}
       </div>
